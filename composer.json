@@ -1,0 +1,28 @@
+{
+    "name": "hexlet/code",
+    "description": "hexlet-difference-calculator",
+    "type": "project",
+
+    "require": {
+        "wp-cli/php-cli-tools": "^0.11.22",
+        "docopt/docopt": "^1.0",
+        "lstrojny/functional-php": "^1.17",
+        "symfony/yaml": "^5.4"
+    },
+
+    "bin": [
+        "bin/gendiff"
+    ],
+
+    "require-dev": {
+        "squizlabs/php_codesniffer": "^3.7",
+        "phpunit/phpunit": "^9.5"
+    },
+    
+    "authors": [
+        {
+            "name": "Gubanov07",
+            "email": "sgubanov325@gmail.com"
+        }
+    ]
+}
