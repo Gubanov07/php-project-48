@@ -24,5 +24,9 @@
             "name": "Gubanov07",
             "email": "sgubanov325@gmail.com"
         }
-    ]
+    ],
+
+    "autoload": {
+        "files": ["src/Parsers.php"]
+    }
 }
