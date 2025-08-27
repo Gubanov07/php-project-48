@@ -27,14 +27,14 @@ function parseJson(string $content): object
     return $data;
 }
 
-function parseFile(string $filePath): object
+function parseFile(string $filePath): array
 {
     $content = readFile($filePath);
     $extension = pathinfo($filePath, PATHINFO_EXTENSION);
     
     switch ($extension) {
         case 'json':
-            return parseJson($content);
+            return (array) parseJson($content);
         default:
             throw new \Exception("Unsupported file format: '{$extension}'");
     }

@@ -6,6 +6,7 @@
     "require": {
         "wp-cli/php-cli-tools": "^0.11.22",
         "docopt/docopt": "^1.0",
+        "funct/funct": "^1.0.0",
         "lstrojny/functional-php": "^1.17",
         "symfony/yaml": "^5.4"
     },
@@ -27,6 +28,9 @@
     ],
 
     "autoload": {
-        "files": ["src/Parsers.php"]
+        "files": [
+            "src/Parsers.php",
+            "src/Differ.php"
+    ]
     }
 }

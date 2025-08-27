@@ -4,8 +4,7 @@
 $autoloadPath1 = __DIR__ . '/../../../autoload.php';
 $autoloadPath2 = __DIR__ . '/../vendor/autoload.php';
 
-use function App\Parsers\parseFile;
-use function App\Parser\readFile;
+use function App\Differ\genDiff;
 
 if (file_exists($autoloadPath1)) {
     require_once $autoloadPath1;
@@ -45,18 +44,8 @@ $secondFile = $args['<secondFile>'];
 $format = $args['--format'];
 
 try {
-    $data1 = parseFile($firstFile);
-    $data2 = parseFile($secondFile);
-
-    echo "First file contents:\n";
-    print_r($data1);
-    echo "\nSecond file contents:\n";
-    print_r($data2);
-    echo "\n";
-    
-    echo "Format: {$format}\n";
-    echo "Comparison logic will be implemented here\n";
-
+    $diff = genDiff($firstFile, $secondFile);
+    echo $diff . PHP_EOL;
 } catch (Exception $e) {
     echo "Error: " . $e->getMessage() . PHP_EOL;
     exit(1);
