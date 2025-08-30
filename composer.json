@@ -31,6 +31,13 @@
         "files": [
             "src/Parsers.php",
             "src/Differ.php"
-    ]
+    ],
+    
+    "scripts": {
+        "lint": "phpcs --standard=PSR12 src/",
+        "test": "vendor/bin/phpunit",
+        "validate": "composer validate"
+    }
+    
     }
 }

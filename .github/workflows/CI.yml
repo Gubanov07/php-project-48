@@ -4,6 +4,9 @@ on: push
 
 permissions:
   contents: read
+  security-events: write
+  actions: read
+  checks: write
 
 jobs:
   build:
@@ -12,6 +15,8 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
+      with:
+        fetch-depth: 0
 
     - name: Validate composer.json and composer.lock
       run: make validate
