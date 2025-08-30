@@ -25,12 +25,8 @@ jobs:
     - name: make test
       run: make test
       
-    - name: Run test & publish code coverage
-      uses: paambaati/codeclimate-action@v2.6.0
+    - name: SonarQube Scan
+      uses: SonarSource/sonarqube-scan-action@v1
       env:
-        XDEBUG_MODE: coverage
-        CC_TEST_REPORTER_ID: ${{ secrets.TEST_REPORTER_ID }}
-      with:
-       coverageCommand: make test-coverage
-       coverageLocations: /build/logs/clover.xml:clover
-       debug: true
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        SONAR_HOST_URL: ${{ secrets.SONAR_HOST_URL }}
