@@ -2,6 +2,9 @@
 
 namespace App\Parsers;
 
+use Symfony\Component\Yaml\Yaml;
+use Exception;
+
 function readFile(string $filePath): string
 {
     if (!file_exists($filePath)) {
@@ -27,15 +30,28 @@ function parseJson(string $content): object
     return $data;
 }
 
-function parseFile(string $filePath): array
+function parseYaml(string $content): object
+{
+    try {
+        $data = Yaml::parse($content, Yaml::PARSE_OBJECT_FOR_MAP);
+        return (object) $data;
+    } catch (Exception $e) {
+        throw new Exception("Invalid YAML: " . $e->getMessage());
+    }
+}
+
+function parseFile(string $filePath): object
 {
     $content = readFile($filePath);
-    $extension = pathinfo($filePath, PATHINFO_EXTENSION);
-
+    $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
+    
     switch ($extension) {
         case 'json':
-            return (array) parseJson($content);
+            return parseJson($content);
+        case 'yml':
+        case 'yaml':
+            return parseYaml($content);
         default:
-            throw new \Exception("Unsupported file format: '{$extension}'");
+            throw new Exception("Unsupported file format: '{$extension}'");
     }
 }

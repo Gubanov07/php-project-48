@@ -11,6 +11,48 @@ class DifferTest extends TestCase
     public function testGenDiffFlatJson()
     {
         $expected = <<<EOF
+  {
+    - follow: false
+      host: hexlet.io
+    - proxy: 123.234.53.22
+    - timeout: 50
+    + timeout: 20
+    + verbose: true
+  }
+  EOF;
+
+        $actual = genDiff(
+            __DIR__ . '/fixtures/file1.json',
+            __DIR__ . '/fixtures/file2.json'
+        );
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testGenDiffFlatYaml()
+    {
+        $expected = <<<EOF
+  {
+    - follow: false
+      host: hexlet.io
+    - proxy: 123.234.53.22
+    - timeout: 50
+    + timeout: 20
+    + verbose: true
+  }
+  EOF;
+
+        $actual = genDiff(
+            __DIR__ . '/fixtures/file1.yaml',
+            __DIR__ . '/fixtures/file2.yaml'
+        );
+
+        $this->assertEquals($expected, $actual);
+    }
+
+    public function testGenDiffMixedFormats()
+    {
+        $expected = <<<EOF
 {
   - follow: false
     host: hexlet.io
@@ -23,7 +65,7 @@ EOF;
 
         $actual = genDiff(
             __DIR__ . '/fixtures/file1.json',
-            __DIR__ . '/fixtures/file2.json'
+            __DIR__ . '/fixtures/file2.yaml'
         );
 
         $this->assertEquals($expected, $actual);

@@ -3,9 +3,8 @@
 
 
 gendiff:
-[![asciicast](https://asciinema.org/a/hqh6bSGtepyQQ0867F4IWTZJs)](https://asciinema.org/a/hqh6bSGtepyQQ0867F4IWTZJs)
+[![asciicast](https://asciinema.org/a/ALK1w8t2yNl28Wrn8GPtORdEt)](https://asciinema.org/a/ALK1w8t2yNl28Wrn8GPtORdEt)
 
 
-Иммутабельность:
-[![asciicast](https://asciinema.org/a/77NcT0AiSTjrUJ4Di7bCSh4tq)](https://asciinema.org/a/77NcT0AiSTjrUJ4Di7bCSh4tq)
+
 
