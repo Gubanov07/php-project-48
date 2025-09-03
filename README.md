@@ -6,5 +6,6 @@ gendiff:
 [![asciicast](https://asciinema.org/a/ALK1w8t2yNl28Wrn8GPtORdEt)](https://asciinema.org/a/ALK1w8t2yNl28Wrn8GPtORdEt)
 
 
+[![asciicast](https://asciinema.org/a/0tA1IMIPVvd7FjfIDWi6oiGmO)](https://asciinema.org/a/0tA1IMIPVvd7FjfIDWi6oiGmO)
 
-
+php bin/gendiff tests/fixtures/file1.json tests/fixtures/file2.json 
