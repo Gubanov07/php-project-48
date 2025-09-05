@@ -30,7 +30,10 @@
     "autoload": {
         "files": [
             "src/Parsers.php",
-            "src/Differ.php"
+            "src/Differ.php",
+            "src/Formatter.php",
+            "src/Formatter/Stylish.php",
+            "src/Formatter/Plain.php" 
         ]
     },
 
