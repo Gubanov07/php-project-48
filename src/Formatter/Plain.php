@@ -6,7 +6,7 @@ function format(array $diff): string
 {
     $lines = [];
     buildPlainLines($diff, $lines);
-    return implode("\n", $lines);
+    return implode("", $lines);
 }
 
 function buildPlainLines(array $diff, array &$lines, string $path = ''): void
