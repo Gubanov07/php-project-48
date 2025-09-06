@@ -10,3 +10,6 @@
 
 Плоский формат:
 [![asciicast](https://asciinema.org/a/iIe9zZ0aZe8isBKO8PO72iYeU)](https://asciinema.org/a/iIe9zZ0aZe8isBKO8PO72iYeU)
+
+Формат Json:
+[![asciicast](https://asciinema.org/a/HfNLKEziQ5Fk6cHIRtEZ05oKH)](https://asciinema.org/a/HfNLKEziQ5Fk6cHIRtEZ05oKH)
