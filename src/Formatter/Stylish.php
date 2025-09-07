@@ -36,9 +36,13 @@ function format(array $diff, int $depth = 0): string
                 $lines[] = "{$indent}    }";
                 break;
         }
+        $result = implode("\n", $lines);
+    }
+    if ($depth === 0) {
+        $result = "{\n" . $result . "\n}";
     }
     
-    return implode("\n", $lines);
+    return $result;
 }
 
 function stringify($value, int $depth): string
