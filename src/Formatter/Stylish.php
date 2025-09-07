@@ -61,8 +61,8 @@ function stringify($value, int $depth): string
     
     if (is_array($value) || is_object($value)) {
         $value = (array) $value;
-        $indent = str_repeat('    ', $depth);
-        $innerIndent = str_repeat('    ', $depth + 1);
+        $indent = str_repeat('      ', $depth);
+        $innerIndent = str_repeat('      ', $depth + 1);
         $lines = [];
         
         foreach ($value as $key => $val) {
