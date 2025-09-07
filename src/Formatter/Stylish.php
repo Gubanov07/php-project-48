@@ -21,7 +21,7 @@ function format(array $diff, int $depth = 0): string
                 break;
             case 'unchanged':
                 $value = stringify($node['value'], $depth);
-                $lines[] = "{$indent}    {$key}: {$value}";
+                $lines[] = "{$indent}  {$key}: {$value}";
                 break;
             case 'changed':
                 $oldValue = stringify($node['oldValue'], $depth);
@@ -31,9 +31,9 @@ function format(array $diff, int $depth = 0): string
                 break;
             case 'nested':
                 $children = format($node['children'], $depth + 1);
-                $lines[] = "{$indent}    {$key}: {";
+                $lines[] = "{$indent}  {$key}: {";
                 $lines[] = $children;
-                $lines[] = "{$indent}    }";
+                $lines[] = "{$indent}  }";
                 break;
         }
         $result = implode("\n", $lines);
