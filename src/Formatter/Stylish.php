@@ -64,7 +64,7 @@ function stringify($value, int $depth): string
         $lines = [];
         
         foreach ($value as $key => $val) {
-            $lines[] = "{$innerIndent}{$key}: " . stringify($val, $depth + 1);
+            $lines[] = "{$indent}    {$key}: " . stringify($val, $depth);
         }
         
         return "{\n" . implode("\n", $lines) . "\n{$indent}}";
