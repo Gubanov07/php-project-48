@@ -26,30 +26,12 @@ function buildDiff(array $data1, array $data2, bool $forPlain = false): array
         $value2 = $data2[$key] ?? null;
         
         if (!array_key_exists($key, $data2)) {
-            if (!$forPlain && (is_object($value1) || is_array($value1))) {
-                $value1 = (array) $value1;
-                $diff[] = [
-                    'type' => 'nested',
-                    'key' => $key,
-                    'children' => buildDiff($value1, [], $forPlain)
-                ];
-            } else {
-                $diff[] = ['type' => 'removed', 'key' => $key, 'value' => $value1];
-            }
+            $diff[] = ['type' => 'removed', 'key' => $key, 'value' => $value1];
             continue;
         }
         
         if (!array_key_exists($key, $data1)) {
-            if (!$forPlain && (is_object($value2) || is_array($value2))) {
-                $value2 = (array) $value2;
-                $diff[] = [
-                    'type' => 'nested',
-                    'key' => $key,
-                    'children' => buildDiff([], $value2, $forPlain)
-                ];
-            } else {
-                $diff[] = ['type' => 'added', 'key' => $key, 'value' => $value2];
-            }
+            $diff[] = ['type' => 'added', 'key' => $key, 'value' => $value2];
             continue;
         }
         
@@ -57,11 +39,19 @@ function buildDiff(array $data1, array $data2, bool $forPlain = false): array
         $value2 = is_object($value2) ? (array) $value2 : $value2;
         
         if (is_array($value1) && is_array($value2)) {
-            $diff[] = [
-                'type' => 'nested',
-                'key' => $key,
-                'children' => buildDiff($value1, $value2, $forPlain)
-            ];
+            if ($forPlain) {
+                if ($value1 === $value2) {
+                    $diff[] = ['type' => 'unchanged', 'key' => $key, 'value' => $value1];
+                } else {
+                    $diff[] = ['type' => 'changed', 'key' => $key, 'oldValue' => $value1, 'newValue' => $value2];
+                }
+            } else {
+                $diff[] = [
+                    'type' => 'nested',
+                    'key' => $key,
+                    'children' => buildDiff($value1, $value2, $forPlain)
+                ];
+            }
             continue;
         }
         

@@ -5,8 +5,7 @@ namespace Differ\Formatters\Stylish;
 function format(array $diff, int $depth = 0): string
 {
     $lines = [];
-    $baseIndent = str_repeat('    ', $depth);
-    $signIndent = str_repeat('      ', $depth);
+    $indent = str_repeat('    ', $depth);
     
     foreach ($diff as $node) {
         $key = $node['key'];
@@ -14,41 +13,44 @@ function format(array $diff, int $depth = 0): string
         switch ($node['type']) {
             case 'added':
                 $value = stringify($node['value'], $depth);
-                $lines[] = "{$signIndent}+ {$key}: {$value}";
+                $lines[] = "{$indent}+ {$key}: {$value}";
                 break;
             case 'removed':
                 $value = stringify($node['value'], $depth);
-                $lines[] = "{$signIndent}- {$key}: {$value}";
+                $lines[] = "{$indent}- {$key}: {$value}";
                 break;
             case 'unchanged':
                 $value = stringify($node['value'], $depth);
-                $lines[] = "{$baseIndent}    {$key}: {$value}";
+                $lines[] = "{$indent}    {$key}: {$value}";
                 break;
             case 'changed':
                 $oldValue = stringify($node['oldValue'], $depth);
                 $newValue = stringify($node['newValue'], $depth);
-                $lines[] = "{$signIndent}- {$key}: {$oldValue}";
-                $lines[] = "{$signIndent}+ {$key}: {$newValue}";
+                $lines[] = "{$indent}- {$key}: {$oldValue}";
+                $lines[] = "{$indent}+ {$key}: {$newValue}";
                 break;
             case 'nested':
                 $children = format($node['children'], $depth + 1);
-                $lines[] = "{$baseIndent}    {$key}: {";
+                $lines[] = "{$indent}    {$key}: {";
                 $lines[] = $children;
-                $lines[] = "{$baseIndent}    }";
+                $lines[] = "{$indent}    }";
                 break;
         }
+        $result = implode("\n", $lines);
     }
-    
-    $result = implode("\n", $lines);
-    
     if ($depth === 0) {
         $result = "{\n" . $result . "\n}";
     }
     
     return $result;
 }
+
 function stringify($value, int $depth): string
 {
+    if (is_array($value) && isset($value['key5'])) {
+        echo "DEPTH: $depth\n";
+    }
+
     if (is_bool($value)) {
         return $value ? 'true' : 'false';
     }
@@ -58,7 +60,16 @@ function stringify($value, int $depth): string
     }
     
     if (is_array($value) || is_object($value)) {
-        return '[complex value]';
+        $value = (array) $value;
+        $indent = str_repeat('    ', $depth);
+        $innerIndent = str_repeat('    ', $depth + 1);
+        $lines = [];
+        
+        foreach ($value as $key => $val) {
+            $lines[] = "{$innerIndent}{$key}: " . stringify($val, $depth + 1);
+        }
+        
+        return "{\n" . implode("\n", $lines) . "\n{$indent}}";
     }
     
     return (string) $value;
