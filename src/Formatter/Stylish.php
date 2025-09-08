@@ -6,7 +6,7 @@ function format(array $diff, int $depth = 0): string
 {
     $lines = [];
     $baseIndent = str_repeat('    ', $depth);
-    $signIndent = str_repeat('      ', $depth);
+    $signIndent = $baseIndent . '  ';
     
     foreach ($diff as $node) {
         $key = $node['key'];
