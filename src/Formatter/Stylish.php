@@ -59,7 +59,15 @@ function stringify($value, int $depth): string
     }
     
     if (is_array($value) || is_object($value)) {
-        return '[complex value]';
+        $value = (array) $value;
+        $indent = str_repeat('    ', $depth);
+        $innerIndent = str_repeat('    ', $depth);
+        $lines = [];
+        
+        foreach ($value as $key => $val) {
+            $lines[] = "{$innerIndent}{$key}: " . stringify($val, $depth + 1);
+        }
+        return "{\n" . implode("\n", $lines) . "\n{$indent}}";
     }
     
     return (string) $value;
