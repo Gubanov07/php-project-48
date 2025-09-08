@@ -49,10 +49,6 @@ function format(array $diff, int $depth = 0): string
 }
 function stringify($value, int $depth): string
 {
-    if (is_array($value) && isset($value['key5'])) {
-        echo "DEPTH: $depth\n";
-    }
-
     if (is_bool($value)) {
         return $value ? 'true' : 'false';
     }
@@ -64,11 +60,11 @@ function stringify($value, int $depth): string
     if (is_array($value) || is_object($value)) {
         $value = (array) $value;
         $indent = str_repeat('    ', $depth);
-        $innerIndent = str_repeat('    ', $depth + 1);
+        $innerIndent = str_repeat('    ', $depth);
         $lines = [];
         
         foreach ($value as $key => $val) {
-            $lines[] = "{$innerIndent}{$key}: " . stringify($val, $depth + 1);
+            $lines[] = "{$innerIndent}    {$key}: " . stringify($val, $depth);
         }
         
         return "{\n" . implode("\n", $lines) . "\n{$indent}}";
