@@ -60,11 +60,10 @@ function stringify($value, int $depth): string
     if (is_array($value) || is_object($value)) {
         $value = (array) $value;
         $indent = str_repeat('    ', $depth);
-        $innerIndent = str_repeat('   ', $depth + 1);
         $lines = [];
         
         foreach ($value as $key => $val) {
-            $lines[] = "{$indent}    {$key}: " . stringify($val, $depth);
+            $lines[] = "        {$key}: " . stringify($val, 0);
         }
         
         return "{\n" . implode("\n", $lines) . "\n{$indent}}";
