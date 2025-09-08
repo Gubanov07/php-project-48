@@ -59,14 +59,13 @@ function stringify($value, int $depth): string
     
     if (is_array($value) || is_object($value)) {
         $value = (array) $value;
-        $indent = str_repeat('    ', $depth);
         $lines = [];
         
         foreach ($value as $key => $val) {
-            $lines[] = "        {$key}: " . stringify($val, 0);
+            $lines[] = "            {$key}: " . stringify($val, $depth);
         }
         
-        return "{\n" . implode("\n", $lines) . "\n{$indent}}";
+        return "{\n" . implode("\n", $lines) . "\n        }";
     }
     
     return (string) $value;
