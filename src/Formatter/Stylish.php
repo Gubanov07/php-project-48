@@ -58,14 +58,7 @@ function stringify($value, int $depth): string
     }
     
     if (is_array($value) || is_object($value)) {
-        $value = (array) $value;
-        $lines = [];
-        
-        foreach ($value as $key => $val) {
-            $lines[] = "            {$key}: " . stringify($val, $depth);
-        }
-        
-        return "{\n" . implode("\n", $lines) . "\n        }";
+        return '[complex value]';
     }
     
     return (string) $value;
