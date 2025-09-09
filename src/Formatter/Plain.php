@@ -4,50 +4,47 @@ namespace Differ\Formatters\Plain;
 
 function format(array $diff): string
 {
-    $lines = [];
-    buildPlainLines($diff, $lines);
+    $lines = buildPlainLines($diff);
     return implode("\n", $lines);
 }
 
-function buildPlainLines(array $diff, array &$lines, string $path = ''): void
+function buildPlainLines(array $diff, string $path = ''): array
 {
-    foreach ($diff as $node) {
-        $currentPath = $path ? "{$path}.{$node['key']}" : $node['key'];
-
+    return array_reduce($diff, function ($acc, $node) use ($path) {
+        $currentPath = $path === '' ? $node['key'] : "{$path}.{$node['key']}";
+        
         switch ($node['type']) {
             case 'added':
-                $lines[] = "Property '{$currentPath}' was added with value: " . toString($node['value']);
-                break;
+                return array_merge($acc, ["Property '{$currentPath}' was added with value: " . toString($node['value'])]);
             case 'removed':
-                $lines[] = "Property '{$currentPath}' was removed";
-                break;
+                return array_merge($acc, ["Property '{$currentPath}' was removed"]);
             case 'changed':
-                $lines[] = "Property '{$currentPath}' was updated. From " . toString($node['oldValue']) . " to " . toString($node['newValue']);
-                break;
+                return array_merge($acc, ["Property '{$currentPath}' was updated. From " . toString($node['oldValue']) . " to " . toString($node['newValue'])]);
             case 'nested':
-                buildPlainLines($node['children'], $lines, $currentPath);
-                break;
+                return array_merge($acc, buildPlainLines($node['children'], $currentPath));
+            default:
+                return $acc;
         }
-    }
+    }, []);
 }
 
-function toString($value): string
+function toString(mixed $value): string
 {
     if (is_object($value) || is_array($value)) {
         return '[complex value]';
     }
-
+    
     if (is_bool($value)) {
         return $value ? 'true' : 'false';
     }
-
+    
     if (is_null($value)) {
         return 'null';
     }
-
+    
     if (is_string($value)) {
         return "'{$value}'";
     }
-
+    
     return (string) $value;
 }
