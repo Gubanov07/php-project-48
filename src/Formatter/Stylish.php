@@ -60,12 +60,12 @@ function stringify(mixed $value, int $depth): string
     }
 
     if (is_array($value) || is_object($value)) {
-        $arrayValue = (array) $value;
+        $value = (array) $value;
         $baseIndent = str_repeat('    ', $depth);
         $innerIndent = str_repeat('    ', $depth + 1);
 
-        $lines = array_reduce(array_keys($arrayValue), function ($acc, $key) use ($arrayValue, $depth, $innerIndent) {
-            $val = stringify($arrayValue[$key], $depth + 1);
+        $lines = array_reduce(array_keys($value), function ($acc, $key) use ($value, $depth, $innerIndent) {
+            $val = stringify($value[$key], $depth + 1);
             return array_merge($acc, ["{$innerIndent}{$key}: {$val}"]);
         }, []);
 
