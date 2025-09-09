@@ -4,7 +4,6 @@ namespace Differ\Formatters\Stylish;
 
 function format(array $diff, int $depth = 0): string
 {
-    $lines = [];
     $baseIndent = str_repeat('    ', $depth);
     $signIndent = $baseIndent . '  ';
 
@@ -41,12 +40,7 @@ function format(array $diff, int $depth = 0): string
     }, []);
 
     $result = implode("\n", $lines);
-
-    if ($depth === 0) {
-        $result = "{\n" . $result . "\n}";
-    }
-
-    return $result;
+    return $depth === 0 ? "{\n{$result}\n}" : $result;
 }
 
 function stringify(mixed $value, int $depth): string
@@ -60,12 +54,12 @@ function stringify(mixed $value, int $depth): string
     }
 
     if (is_array($value) || is_object($value)) {
-        $value = (array) $value;
+        $arrayValue = (array) $value;
         $baseIndent = str_repeat('    ', $depth);
         $innerIndent = str_repeat('    ', $depth + 1);
 
-        $lines = array_reduce(array_keys($value), function ($acc, $key) use ($value, $depth, $innerIndent) {
-            $val = stringify($value[$key], $depth + 1);
+        $lines = array_reduce(array_keys($arrayValue), function ($acc, $key) use ($arrayValue, $depth, $innerIndent) {
+            $val = stringify($arrayValue[$key], $depth + 1);
             return array_merge($acc, ["{$innerIndent}{$key}: {$val}"]);
         }, []);
 

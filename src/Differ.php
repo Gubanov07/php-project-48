@@ -31,28 +31,34 @@ function buildDiff(array $data1, array $data2): array
             return array_merge($acc, [['type' => 'added', 'key' => $key, 'value' => $value2]]);
         }
 
-        $value1 = is_object($value1) ? (array) $value1 : $value1;
-        $value2 = is_object($value2) ? (array) $value2 : $value2;
+        $processedValue1 = is_object($value1) ? (array) $value1 : $value1;
+        $processedValue2 = is_object($value2) ? (array) $value2 : $value2;
 
         if (is_array($value1) && is_array($value2)) {
             return array_merge($acc, [[
                 'type' => 'nested',
                 'key' => $key,
-                'children' => buildDiff($value1, $value2)
+                'children' => buildDiff($processedValue1, $processedValue2)
             ]]);
         }
 
-        if ($value1 === $value2) {
-            return array_merge($acc, [['type' => 'unchanged', 'key' => $key, 'value' => $value1]]);
+        if ($processedValue1 === $processedValue2) {
+            return array_merge($acc, [['type' => 'unchanged', 'key' => $key, 'value' => $processedValue1]]);
         }
 
-        return array_merge($acc, [['type' => 'changed', 'key' => $key, 'oldValue' => $value1, 'newValue' => $value2]]);
+        return array_merge($acc, [['type' => 'changed', 'key' => $key, 'oldValue' => $processedValue1, 'newValue' => $processedValue2]]);
     }, []);
 }
 
-function array_sort(array $array): array
+function array_sort(array $array): array 
 {
-    $sorted = $array;
-    sort($sorted);
-    return $sorted;
+    if (count($array) <= 1) {
+        return $array;
+    }
+    
+    $pivot = $array[0];
+    $left = array_filter(array_slice($array, 1), fn($x) => $x < $pivot);
+    $right = array_filter(array_slice($array, 1), fn($x) => $x >= $pivot);
+    
+    return array_merge(array_sort($left), [$pivot], array_sort($right));
 }
