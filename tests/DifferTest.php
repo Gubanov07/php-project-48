@@ -8,43 +8,43 @@ use function Differ\Differ\genDiff;
 
 class DifferTest extends TestCase
 {
-  public function testGenDiffNested()
-  {
-      $expected = $this->getExpectedDiff();
-      
-      // Test JSON files
-      $actualJson = genDiff(
-          __DIR__ . '/fixtures/file1.json',
-          __DIR__ . '/fixtures/file2.json'
-      );
-      $this->assertEquals($expected, $actualJson);
+    public function testGenDiffNested()
+    {
+        $expected = $this->getExpectedDiff();
+        
+        // Test JSON files
+        $actualJson = genDiff(
+            __DIR__ . '/fixtures/file1.json',
+            __DIR__ . '/fixtures/file2.json'
+        );
+        $this->assertEquals($expected, $actualJson);
 
-      // Test YAML files
-      $actualYaml = genDiff(
-          __DIR__ . '/fixtures/file1.yaml',
-          __DIR__ . '/fixtures/file2.yaml'
-      );
-      $this->assertEquals($expected, $actualYaml);
+        // Test YAML files
+        $actualYaml = genDiff(
+            __DIR__ . '/fixtures/file1.yaml',
+            __DIR__ . '/fixtures/file2.yaml'
+        );
+        $this->assertEquals($expected, $actualYaml);
 
-      $actualYml = genDiff(
-          __DIR__ . '/fixtures/file1.yml',
-          __DIR__ . '/fixtures/file2.yml'
-      );
-      $this->assertEquals($expected, $actualYml);
+        $actualYml = genDiff(
+            __DIR__ . '/fixtures/file1.yml',
+            __DIR__ . '/fixtures/file2.yml'
+        );
+        $this->assertEquals($expected, $actualYml);
 
-      // Test mixed
-      $actualMixed1 = genDiff(
-          __DIR__ . '/fixtures/file1.json',
-          __DIR__ . '/fixtures/file2.yaml'
-      );
-      $this->assertEquals($expected, $actualMixed1);
+        // Test mixed
+        $actualMixed1 = genDiff(
+            __DIR__ . '/fixtures/file1.json',
+            __DIR__ . '/fixtures/file2.yaml'
+        );
+        $this->assertEquals($expected, $actualMixed1);
 
-      $actualMixed2 = genDiff(
-          __DIR__ . '/fixtures/file1.yaml',
-          __DIR__ . '/fixtures/file2.json'
-      );
-      $this->assertEquals($expected, $actualMixed2); 
-  }
+        $actualMixed2 = genDiff(
+            __DIR__ . '/fixtures/file1.yaml',
+            __DIR__ . '/fixtures/file2.json'
+        );
+        $this->assertEquals($expected, $actualMixed2); 
+    }
 
     private function getExpectedDiff(): string
     {
@@ -94,29 +94,29 @@ class DifferTest extends TestCase
     EOF;
     }
 
-  public function testGenDiffPlain()
-  {
-    $expected = <<<EOF
-    Property 'common.follow' was added with value: false
-    Property 'common.setting2' was removed
-    Property 'common.setting3' was updated. From true to null
-    Property 'common.setting4' was added with value: 'blah blah'
-    Property 'common.setting5' was added with value: [complex value]
-    Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
-    Property 'common.setting6.ops' was added with value: 'vops'
-    Property 'group1.baz' was updated. From 'bas' to 'bars'
-    Property 'group1.nest' was updated. From [complex value] to 'str'
-    Property 'group2' was removed
-    Property 'group3' was added with value: [complex value]
-    EOF;
+    public function testGenDiffPlain()
+    {
+        $expected = <<<EOF
+        Property 'common.follow' was added with value: false
+        Property 'common.setting2' was removed
+        Property 'common.setting3' was updated. From true to null
+        Property 'common.setting4' was added with value: 'blah blah'
+        Property 'common.setting5' was added with value: [complex value]
+        Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
+        Property 'common.setting6.ops' was added with value: 'vops'
+        Property 'group1.baz' was updated. From 'bas' to 'bars'
+        Property 'group1.nest' was updated. From [complex value] to 'str'
+        Property 'group2' was removed
+        Property 'group3' was added with value: [complex value]
+        EOF;
 
-    // Test format plain
-      $actualPlain = genDiff(
-          __DIR__ . '/fixtures/file1.json',
-          __DIR__ . '/fixtures/file2.json',
-          'plain'
-      );
+        // Test format plain
+        $actualPlain = genDiff(
+            __DIR__ . '/fixtures/file1.json',
+            __DIR__ . '/fixtures/file2.json',
+            'plain'
+        );
 
-      $this->assertEquals($expected, $actualPlain);
-  }
+        $this->assertEquals($expected, $actualPlain);
+    }
 }
