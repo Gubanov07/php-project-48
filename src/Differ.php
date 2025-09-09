@@ -50,15 +50,13 @@ function buildDiff(array $data1, array $data2): array
     }, []);
 }
 
-function array_sort(array $array): array 
+function array_sort(array $array): array
 {
     if (count($array) <= 1) {
         return $array;
     }
-    
     $pivot = $array[0];
     $left = array_filter(array_slice($array, 1), fn($x) => $x < $pivot);
     $right = array_filter(array_slice($array, 1), fn($x) => $x >= $pivot);
-    
     return array_merge(array_sort($left), [$pivot], array_sort($right));
 }
