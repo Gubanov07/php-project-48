@@ -10,12 +10,11 @@ function genDiff(string $filePath1, string $filePath2, string $format = 'stylish
     $data1 = (array) parseFile($filePath1);
     $data2 = (array) parseFile($filePath2);
     
-    $forPlain = ($format === 'plain');
-    $diff = buildDiff($data1, $data2, $forPlain);
+    $diff = buildDiff($data1, $data2);
     return formatDiff($diff, $format);
 }
 
-function buildDiff(array $data1, array $data2, bool $forPlain = false): array
+function buildDiff(array $data1, array $data2) : array
 {
     $allKeys = array_unique(array_merge(array_keys($data1), array_keys($data2)));
     $sortedKeys = sortKeys($allKeys);
@@ -39,19 +38,11 @@ function buildDiff(array $data1, array $data2, bool $forPlain = false): array
         $value2 = is_object($value2) ? (array) $value2 : $value2;
         
         if (is_array($value1) && is_array($value2)) {
-            if ($forPlain) {
-                if ($value1 === $value2) {
-                    $diff[] = ['type' => 'unchanged', 'key' => $key, 'value' => $value1];
-                } else {
-                    $diff[] = ['type' => 'changed', 'key' => $key, 'oldValue' => $value1, 'newValue' => $value2];
-                }
-            } else {
-                $diff[] = [
-                    'type' => 'nested',
-                    'key' => $key,
-                    'children' => buildDiff($value1, $value2, $forPlain)
-                ];
-            }
+            $diff[] = [
+                'type' => 'nested',
+                'key' => $key,
+                'children' => buildDiff($value1, $value2)
+            ];
             continue;
         }
         
