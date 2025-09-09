@@ -44,7 +44,7 @@ function parseFile(string $filePath): object
 {
     $content = readFile($filePath);
     $extension = strtolower(pathinfo($filePath, PATHINFO_EXTENSION));
-    
+
     switch ($extension) {
         case 'json':
             return parseJson($content);

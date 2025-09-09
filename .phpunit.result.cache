@@ -1,1 +1,1 @@
-{"version":1,"defects":{"Tests\\DifferTest::testGenDiffNested":3,"Tests\\DifferTest::testGenDiffPlain":4},"times":{"Tests\\DifferTest::testGenDiffNested":0.136,"Tests\\DifferTest::testGenDiffPlain":0.028}}
+{"version":1,"defects":{"Tests\\DifferTest::testGenDiffNested":3,"Tests\\DifferTest::testGenDiffPlain":4},"times":{"Tests\\DifferTest::testGenDiffNested":0.18,"Tests\\DifferTest::testGenDiffPlain":0.028}}
