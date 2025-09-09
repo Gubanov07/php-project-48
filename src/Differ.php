@@ -34,7 +34,7 @@ function buildDiff(array $data1, array $data2): array
         $processedValue1 = is_object($value1) ? (array) $value1 : $value1;
         $processedValue2 = is_object($value2) ? (array) $value2 : $value2;
 
-        if (is_array($value1) && is_array($value2)) {
+        if (is_array($processedValue1) && is_array($processedValue2)) {
             return array_merge($acc, [[
                 'type' => 'nested',
                 'key' => $key,
