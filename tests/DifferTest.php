@@ -11,7 +11,6 @@ class DifferTest extends TestCase
     public function testGenDiffNested()
     {
         $expected = $this->getExpectedDiff();
-        
         // Test JSON files
         $actualJson = genDiff(
             __DIR__ . '/fixtures/file1.json',
@@ -43,7 +42,7 @@ class DifferTest extends TestCase
             __DIR__ . '/fixtures/file1.yaml',
             __DIR__ . '/fixtures/file2.json'
         );
-        $this->assertEquals($expected, $actualMixed2); 
+        $this->assertEquals($expected, $actualMixed2);
     }
 
     private function getExpectedDiff(): string
