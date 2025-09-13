@@ -2,16 +2,48 @@
 
 namespace Differ\Differ;
 
+use Exception;
 use function Differ\Parsers\parseFile;
-use function Differ\Formatter\format as formatDiff;
+use function Differ\Formatter\getDesiredFormat as formatDiff;
 
 function genDiff(string $filePath1, string $filePath2, string $format = 'stylish'): string
 {
-    $data1 = (array) parseFile($filePath1);
-    $data2 = (array) parseFile($filePath2);
+    $data1 = makeParseFile($filePath1);
+    $data2 = makeParseFile($filePath2);
 
     $diff = buildDiff($data1, $data2);
     return formatDiff($diff, $format);
+}
+
+
+function makeParseFile(string $filePath): array
+{
+    return parseFile(getExtension($filePath), getFileContent($filePath));
+}
+
+function getExtension(string $filePath): string
+{
+    return pathinfo(getAbsolutePathToFile($filePath), PATHINFO_EXTENSION);
+}
+
+function getAbsolutePathToFile(string $filePath): string
+{
+    $absolutePath = realpath($filePath);
+    if ($absolutePath === false) {
+        throw new Exception("File does not exist: $filePath");
+    }
+    
+    return $absolutePath;
+}
+
+function getFileContent(string $filePath): string
+{
+    $content = file_get_contents(getAbsolutePathToFile($filePath));
+
+    if ($content === false) {
+        throw new Exception("File read error");
+    }
+    return $content;
 }
 
 function buildDiff(array $data1, array $data2): array
@@ -52,11 +84,9 @@ function buildDiff(array $data1, array $data2): array
 
 function array_sort(array $array): array
 {
-    if (count($array) <= 1) {
-        return $array;
-    }
-    $pivot = $array[0];
-    $left = array_filter(array_slice($array, 1), fn($x) => $x < $pivot);
-    $right = array_filter(array_slice($array, 1), fn($x) => $x >= $pivot);
-    return array_merge(array_sort($left), [$pivot], array_sort($right));
+    $sorted = $array;
+    usort($sorted, function ($a, $b) {
+        return strcmp((string)$a, (string)$b);
+    });
+    return $sorted;
 }

@@ -3,119 +3,62 @@
 namespace Tests;
 
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\DataProvider;
 
 use function Differ\Differ\genDiff;
 
 class DifferTest extends TestCase
 {
-    public function testGenDiffNested()
+    public function getFullPath($fixtureName): string
     {
-        $expected = $this->getExpectedDiff();
-        // Test JSON files
-        $actualJson = genDiff(
-            __DIR__ . '/fixtures/file1.json',
-            __DIR__ . '/fixtures/file2.json'
-        );
-        $this->assertEquals($expected, $actualJson);
-
-        // Test YAML files
-        $actualYaml = genDiff(
-            __DIR__ . '/fixtures/file1.yaml',
-            __DIR__ . '/fixtures/file2.yaml'
-        );
-        $this->assertEquals($expected, $actualYaml);
-
-        $actualYml = genDiff(
-            __DIR__ . '/fixtures/file1.yml',
-            __DIR__ . '/fixtures/file2.yml'
-        );
-        $this->assertEquals($expected, $actualYml);
-
-        // Test mixed
-        $actualMixed1 = genDiff(
-            __DIR__ . '/fixtures/file1.json',
-            __DIR__ . '/fixtures/file2.yaml'
-        );
-        $this->assertEquals($expected, $actualMixed1);
-
-        $actualMixed2 = genDiff(
-            __DIR__ . '/fixtures/file1.yaml',
-            __DIR__ . '/fixtures/file2.json'
-        );
-        $this->assertEquals($expected, $actualMixed2);
+        return __DIR__ . '/fixtures/' . $fixtureName;
     }
 
-    private function getExpectedDiff(): string
+    public static function additionProvider(): array
     {
-        return <<<'EOF'
-        common: {
-        + follow: false
-            setting1: Value 1
-        - setting2: 200
-        - setting3: true
-        + setting3: null
-        + setting4: blah blah
-            setting5: {
-            + key5: value5
-            }
-            setting6: {
-                doge: {
-                - wow: 
-                + wow: so much
-                }
-                key: value
-            + ops: vops
-            }
-        }
-        group1: {
-        - baz: bas
-        + baz: bars
-            foo: bar
-        - nest: {
-            key: value
-        }
-        + nest: str
-        }
-        group2: {
-        - abc: 12345
-            deep: {
-            - id: 45
-            }
-        }
-        group3: {
-            deep: {
-                id: {
-                + number: 45
-                }
-            }
-        + fee: 100500
-        }
-    EOF;
+        return [
+            ['json'],
+            ['yaml'],
+            ['yml']
+        ];
     }
 
-    public function testGenDiffPlain()
+    /**
+    * @dataProvider additionProvider
+    */
+    public function testDefaultFormat($formatInput): void
     {
-        $expected = <<<EOF
-        Property 'common.follow' was added with value: false
-        Property 'common.setting2' was removed
-        Property 'common.setting3' was updated. From true to null
-        Property 'common.setting4' was added with value: 'blah blah'
-        Property 'common.setting5' was added with value: [complex value]
-        Property 'common.setting6.doge.wow' was updated. From '' to 'so much'
-        Property 'common.setting6.ops' was added with value: 'vops'
-        Property 'group1.baz' was updated. From 'bas' to 'bars'
-        Property 'group1.nest' was updated. From [complex value] to 'str'
-        Property 'group2' was removed
-        Property 'group3' was added with value: [complex value]
-        EOF;
+        $diff = genDiff($this->getFullPath("file1.$formatInput"), $this->getFullPath("file2.$formatInput"));
+        $this->assertStringEqualsFile($this->getFullPath('TestsStylish.txt'), $diff);
+    }
 
-        // Test format plain
-        $actualPlain = genDiff(
-            __DIR__ . '/fixtures/file1.json',
-            __DIR__ . '/fixtures/file2.json',
-            'plain'
-        );
+    /**
+    * @dataProvider additionProvider
+    */
+    public function testStylishFormat($formatInput): void
+    {
+        $format = "stylish";
+        $diff = genDiff($this->getFullPath("file1.$formatInput"), $this->getFullPath("file2.$formatInput"), $format);
+        $this->assertStringEqualsFile($this->getFullPath('TestsStylish.txt'), $diff);
+    }
 
-        $this->assertEquals($expected, $actualPlain);
+    /**
+    * @dataProvider additionProvider
+    */
+    public function testPlainFormat($formatInput): void
+    {
+        $format = "plain";
+        $diff = genDiff($this->getFullPath("file1.$formatInput"), $this->getFullPath("file2.$formatInput"), $format);
+        $this->assertStringEqualsFile($this->getFullPath('TestsPlain.txt'), $diff);
+    }
+
+    /**
+    * @dataProvider additionProvider
+    */
+    public function testJsonFormat($formatInput): void
+    {
+        $format = "json";
+        $diff = genDiff($this->getFullPath("file1.$formatInput"), $this->getFullPath("file2.$formatInput"), $format);
+        $this->assertStringEqualsFile($this->getFullPath('TestsJson.txt'), $diff);
     }
 }

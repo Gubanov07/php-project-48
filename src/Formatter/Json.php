@@ -4,6 +4,5 @@ namespace Differ\Formatters\Json;
 
 function format(array $diff): string
 {
-    $result = json_encode($diff, JSON_PRETTY_PRINT);
-    return $result === false ? '' : $result;
+    return json_encode($diff, JSON_PRETTY_PRINT | JSON_THROW_ON_ERROR);
 }
