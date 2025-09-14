@@ -3,6 +3,7 @@
 namespace Differ\Differ;
 
 use Exception;
+
 use function Differ\Parsers\parseFile;
 use function Differ\Formatter\getDesiredFormat as formatDiff;
 
@@ -32,7 +33,6 @@ function getAbsolutePathToFile(string $filePath): string
     if ($absolutePath === false) {
         throw new Exception("File does not exist: $filePath");
     }
-    
     return $absolutePath;
 }
 
