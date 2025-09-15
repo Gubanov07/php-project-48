@@ -4,6 +4,7 @@ namespace Differ\Differ;
 
 use Exception;
 
+use function Functional\sort;
 use function Differ\Parsers\parseFile;
 use function Differ\Formatter\getDesiredFormat as formatDiff;
 
@@ -85,7 +86,7 @@ function buildDiff(array $data1, array $data2): array
 function array_sort(array $array): array
 {
     $sorted = $array;
-    usort($sorted, function ($a, $b) {
+    sort($sorted, function ($a, $b) {
         return strcmp((string)$a, (string)$b);
     });
     return $sorted;

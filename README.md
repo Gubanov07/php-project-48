@@ -12,14 +12,21 @@
 1. PHP версии 7.4.0 (и выше)
 2. Composer
 
-Сравнение:
+## Инструкция по установке и запуску
+```
+$ git clone git@github.com:Gubanov07/php-project-48.git
+$ cd php-project-48
+$ make install
+```
+
+Сравнение плоских файлов:
 [![asciicast](https://asciinema.org/a/ALK1w8t2yNl28Wrn8GPtORdEt.svg)](https://asciinema.org/a/ALK1w8t2yNl28Wrn8GPtORdEt)
 
 Рекурсивное сравнение:
 [![asciicast](https://asciinema.org/a/0tA1IMIPVvd7FjfIDWi6oiGmO.svg)](https://asciinema.org/a/0tA1IMIPVvd7FjfIDWi6oiGmO)
 
-Плоский формат:
+Плоский формат отчета:
 [![asciicast](https://asciinema.org/a/iIe9zZ0aZe8isBKO8PO72iYeU.svg)](https://asciinema.org/a/iIe9zZ0aZe8isBKO8PO72iYeU)
 
-Формат Json:
+Формат отчета Json:
 [![asciicast](https://asciinema.org/a/HfNLKEziQ5Fk6cHIRtEZ05oKH.svg)](https://asciinema.org/a/HfNLKEziQ5Fk6cHIRtEZ05oKH)
