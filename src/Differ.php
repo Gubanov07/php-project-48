@@ -50,7 +50,7 @@ function getFileContent(string $filePath): string
 function buildDiff(array $data1, array $data2): array
 {
     $allKeys = array_unique(array_merge(array_keys($data1), array_keys($data2)));
-    $sortedKeys = array_values(array_sort($allKeys));
+    $sortedKeys = array_values(sortKeys($allKeys));
 
     return array_reduce($sortedKeys, function ($acc, $key) use ($data1, $data2) {
         $value1 = $data1[$key] ?? null;
@@ -83,11 +83,9 @@ function buildDiff(array $data1, array $data2): array
     }, []);
 }
 
-function array_sort(array $array): array
+function sortKeys(array $keys): array
 {
-    $sorted = $array;
-    sort($sorted, function ($a, $b) {
+    return sort($keys, function ($a, $b) {
         return strcmp((string)$a, (string)$b);
     });
-    return $sorted;
 }
