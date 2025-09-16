@@ -52,3 +52,10 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      with:
+        args: >
+          -Dsonar.projectKey=Gubanov07_php-project-48
+          -Dsonar.php.coverage.reportPaths=coverage.xml
+          -Dsonar.coverage.exclusions=**/vendor/**,**/tests/**
+          -Dsonar.sources=src
+          -Dsonar.tests=tests
