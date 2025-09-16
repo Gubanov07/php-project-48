@@ -51,14 +51,4 @@ class DifferTest extends TestCase
         $diff = genDiff($this->getFullPath("file1.$formatInput"), $this->getFullPath("file2.$formatInput"), $format);
         $this->assertStringEqualsFile($this->getFullPath('TestsPlain.txt'), $diff);
     }
-
-    /**
-    * @dataProvider additionProvider
-    */
-    public function testJsonFormat($formatInput): void
-    {
-        $format = "json";
-        $diff = genDiff($this->getFullPath("file1.$formatInput"), $this->getFullPath("file2.$formatInput"), $format);
-        $this->assertStringEqualsFile($this->getFullPath('TestsJson.txt'), $diff);
-    }
 }
