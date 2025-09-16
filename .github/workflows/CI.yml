@@ -11,6 +11,7 @@ permissions:
   security-events: write
   actions: read
   checks: write
+  pull-requests: write
 
 jobs:
   build:
@@ -47,7 +48,7 @@ jobs:
       run: vendor/bin/phpunit --coverage-clover=coverage.xml
       
     - name: SonarQube Scan
-      uses: SonarSource/sonarqube-scan-action@v1
+      uses: SonarSource/sonarcloud-github-action@master
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
