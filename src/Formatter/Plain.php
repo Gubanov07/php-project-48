@@ -15,11 +15,13 @@ function buildPlainLines(array $diff, string $path = ''): array
 
         switch ($node['type']) {
             case 'added':
-                return array_merge($acc, ["Property '{$currentPath}' was added with value: " . toString($node['value'])]);
+                return array_merge($acc, ["Property '{$currentPath}' was added with value: "
+                . toString($node['value'])]);
             case 'removed':
                 return array_merge($acc, ["Property '{$currentPath}' was removed"]);
             case 'changed':
-                return array_merge($acc, ["Property '{$currentPath}' was updated. From " . toString($node['oldValue']) . " to " . toString($node['newValue'])]);
+                return array_merge($acc, ["Property '{$currentPath}' was updated. From "
+                . toString($node['oldValue']) . " to " . toString($node['newValue'])]);
             case 'nested':
                 return array_merge($acc, buildPlainLines($node['children'], $currentPath));
             default:

@@ -69,7 +69,8 @@ function buildDiff(array $data1, array $data2): array
         if ($processedValue1 === $processedValue2) {
             return array_merge($acc, [['type' => 'unchanged', 'key' => $key, 'value' => $processedValue1]]);
         }
-        return array_merge($acc, [['type' => 'changed', 'key' => $key, 'oldValue' => $processedValue1, 'newValue' => $processedValue2]]);
+        return array_merge($acc, [['type' => 'changed', 'key' => $key,
+        'oldValue' => $processedValue1, 'newValue' => $processedValue2]]);
     }, []);
 }
 
