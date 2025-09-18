@@ -10,41 +10,34 @@ use function Differ\Formatter\getDesiredFormat as formatDiff;
 
 function genDiff(string $filePath1, string $filePath2, string $format = 'stylish'): string
 {
-    $data1 = makeParseFile($filePath1);
-    $data2 = makeParseFile($filePath2);
+    $content1 = getFileContent($filePath1);
+    $content2 = getFileContent($filePath2);
+
+    $data1 = parseFile(getExtension($filePath1), $content1);
+    $data2 = parseFile(getExtension($filePath2), $content2);
 
     $diff = buildDiff($data1, $data2);
     return formatDiff($diff, $format);
 }
 
-
-function makeParseFile(string $filePath): array
-{
-    return parseFile(getExtension($filePath), getFileContent($filePath));
-}
-
-function getExtension(string $filePath): string
-{
-    return pathinfo(getAbsolutePathToFile($filePath), PATHINFO_EXTENSION);
-}
-
-function getAbsolutePathToFile(string $filePath): string
+function getFileContent(string $filePath): string
 {
     $absolutePath = realpath($filePath);
     if ($absolutePath === false) {
         throw new Exception("File does not exist: $filePath");
     }
-    return $absolutePath;
-}
-
-function getFileContent(string $filePath): string
-{
-    $content = file_get_contents(getAbsolutePathToFile($filePath));
-
+    
+    $content = file_get_contents($absolutePath);
     if ($content === false) {
         throw new Exception("File read error");
     }
+    
     return $content;
+}
+
+function getExtension(string $filePath): string
+{
+    return pathinfo($filePath, PATHINFO_EXTENSION);
 }
 
 function buildDiff(array $data1, array $data2): array

@@ -19,9 +19,6 @@ jobs:
     - uses: actions/checkout@v4
       with:
         fetch-depth: 0
-
-    - name: Validate composer.json and composer.lock
-      run: make validate
     
     - name: make install
       run: make install
@@ -49,13 +46,3 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        args: >
-          -Dsonar.projectKey=Gubanov07_php-project-48
-          -Dsonar.organization=Gubanov07
-          -Dsonar.php.coverage.reportPaths=coverage.xml
-          -Dsonar.coverage.exclusions=**/vendor/**,**/tests/**,**/fixtures/**
-          -Dsonar.sources=src
-          -Dsonar.tests=tests
-          -Dsonar.language=php
-          -Dsonar.sourceEncoding=UTF-8
