@@ -26,12 +26,10 @@ function getFileContent(string $filePath): string
     if ($absolutePath === false) {
         throw new Exception("File does not exist: $filePath");
     }
-    
     $content = file_get_contents($absolutePath);
     if ($content === false) {
         throw new Exception("File read error");
     }
-    
     return $content;
 }
 
@@ -71,7 +69,6 @@ function buildDiff(array $data1, array $data2): array
         if ($processedValue1 === $processedValue2) {
             return array_merge($acc, [['type' => 'unchanged', 'key' => $key, 'value' => $processedValue1]]);
         }
-
         return array_merge($acc, [['type' => 'changed', 'key' => $key, 'oldValue' => $processedValue1, 'newValue' => $processedValue2]]);
     }, []);
 }
