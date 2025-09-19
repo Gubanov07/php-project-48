@@ -23,14 +23,18 @@ class DifferTest extends TestCase
         ];
     }
 
-    #[DataProvider('additionProvider')]
+    /**
+     * @dataProvider additionProvider
+     */
     public function testDefaultFormat($formatInput): void
     {
         $diff = genDiff($this->getFullPath("file1.$formatInput"), $this->getFullPath("file2.$formatInput"));
         $this->assertStringEqualsFile($this->getFullPath('TestsStylish.txt'), $diff);
     }
 
-    #[DataProvider('additionProvider')]
+    /**
+     * @dataProvider additionProvider
+     */
     public function testStylishFormat($formatInput): void
     {
         $format = "stylish";
@@ -38,7 +42,9 @@ class DifferTest extends TestCase
         $this->assertStringEqualsFile($this->getFullPath('TestsStylish.txt'), $diff);
     }
 
-    #[DataProvider('additionProvider')]
+    /**
+     * @dataProvider additionProvider
+     */
     public function testPlainFormat($formatInput): void
     {
         $format = "plain";
@@ -46,7 +52,9 @@ class DifferTest extends TestCase
         $this->assertStringEqualsFile($this->getFullPath('TestsPlain.txt'), $diff);
     }
 
-    #[DataProvider('additionProvider')]
+    /**
+     * @dataProvider additionProvider
+     */
     public function testJsonFormat($formatInput): void
     {
         $format = "json";
