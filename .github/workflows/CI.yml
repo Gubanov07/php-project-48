@@ -39,7 +39,7 @@ jobs:
       run: make test-coverage
           
     - name: Run tests with phpunit/phpunit
-      run: vendor/bin/phpunit --coverage-clover=coverage.xml
+      run: vendor/bin/phpunit tests --coverage-clover=coverage.xml
       
     - name: SonarQube Scan
       uses: SonarSource/sonarqube-scan-action@v5
