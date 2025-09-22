@@ -2,7 +2,7 @@
 [![Actions Status](https://github.com/Gubanov07/php-project-48/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Gubanov07/php-project-48/actions) 
 [![CI](https://github.com/Gubanov07/php-project-48/actions/workflows/CI.yml/badge.svg)](https://github.com/Gubanov07/php-project-48/actions/workflows/CI.yml) 
 [![Maintainability](https://sonarcloud.io/api/project_badges/measure?project=Gubanov07_php-project-48&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=Gubanov07_php-project-48) 
-[![Coverage](https://sonarcloud.io/component_measures?id=Gubanov07_php-project-48&metric=new_coverage)](https://sonarcloud.io/summary/new_code?id=Gubanov07_php-project-48)
+[![Coverage](https://sonarcloud.io/component_measures?id=Gubanov07_php-project-48&metric=new_coverage.svg)](https://sonarcloud.io/summary/new_code?id=Gubanov07_php-project-48)
 
 ### Вычислитель отличий
 Вычислитель отличий - программа, определяющая разницу между двумя структурами данных.
